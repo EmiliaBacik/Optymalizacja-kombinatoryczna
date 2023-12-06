@@ -14,7 +14,7 @@ int n = 15;
 int k = 4;
 std::vector<char> first_oligonucleotide;
 
-//TESTTTSYTYSGFYSFGYEGFSE
+//TESTY2
 int main()
 {
     cout << "start i testy" << endl;
