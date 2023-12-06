@@ -1,4 +1,4 @@
-﻿#include "Instance_generator.hpp"
+﻿#include "Modul1.hpp"
 #include <iostream>
 #include <vector>
 #include <set>
@@ -12,6 +12,7 @@ extern int positive_errors;
 extern int n;
 extern int k;
 extern std::vector<char> first_oligonucleotide;
+extern int first_oligonukleotide_id;
 
 void saveSequenceToFile(const std::vector<char>& sequence, const std::string& fileName)  // zapisuje sekwencje do pliku
 {
@@ -261,6 +262,13 @@ void Spectrum_generator()
             cout << spectrum[i][j];
         cout << endl;
     }
+
+    for (int i = 0; i < spectrum.size(); i++) //wyswietlenie gotowego spektrum
+    {
+        if (spectrum[i] == first_oligonucleotide)
+            first_oligonukleotide_id = i;
+    }
+
     saveSpectrumToFile(spectrum, "spektrum.txt"); // zapis spektrum do pliku
     return;
 }

@@ -130,9 +130,11 @@
     <ClCompile Include="Graph_maker.cpp" />
     <ClCompile Include="Instance_generator.cpp" />
     <ClCompile Include="Optymalizacja kombinatoryczna.cpp" />
+    <ClCompile Include="Weak_algorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Instance_generator.hpp" />
+    <ClInclude Include="Modul1.hpp" />
+    <ClInclude Include="Modul2.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

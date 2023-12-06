@@ -1,5 +1,5 @@
-#ifndef Instance_generator_hpp
-#define Instance_generator_hpp
+#ifndef Modul1_hpp
+#define Modul1_hpp
 #include <iostream>
 #include <vector>
 
