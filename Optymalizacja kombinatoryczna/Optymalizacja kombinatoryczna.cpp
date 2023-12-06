@@ -14,9 +14,9 @@ int n = 15;
 int k = 4;
 std::vector<char> first_oligonucleotide;
 
-//2Testy
 int main()
 {
+    cout << "start" << endl;
     Sequence_generator();  // generuje sekwencje
     Spectrum_generator(); // wczytuje sekwencje z pliku i na jej podstawie robi spektrum
     vector<vector<char>> spectrum = loadSpectrumFromFile("spektrum.txt");
