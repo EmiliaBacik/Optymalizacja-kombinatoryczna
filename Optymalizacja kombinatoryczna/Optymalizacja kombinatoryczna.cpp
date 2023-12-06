@@ -14,6 +14,7 @@ int n = 15;
 int k = 4;
 std::vector<char> first_oligonucleotide;
 
+//2Testy
 int main()
 {
     Sequence_generator();  // generuje sekwencje
