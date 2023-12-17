@@ -9,10 +9,10 @@
 #include <fstream> // dodana biblioteka do zapisu
 using namespace std;
 
-int negative_errors = 4; //uwaga - tylko na poczatku, ulegnie zmianie przy generowaniu spektrum!
+int negative_errors = 5; //uwaga - tylko na poczatku, ulegnie zmianie przy generowaniu spektrum!
 int positive_errors = 3;
-int n = 15;
-int k = 5;
+int n = 25;
+int k = 4;
 std::vector<char> first_oligonucleotide;
 int first_oligonukleotide_id=0;
 
