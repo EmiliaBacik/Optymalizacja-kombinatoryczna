@@ -16,15 +16,15 @@ int parametr_not_chosen = 2; //!!!do zmian!!! - po ilu gorszych krawêdziach nale
 
 vector<int> Weak_algorithm(vector<vector<int>> graph)
 {
-    srand(time(NULL));
     for (int i = 0; i < graph.size(); i++)
         was_visited.push_back(false);
     vector<int> path;
     Find_next(path, graph, first_oligonukleotide_id);
-    cout << endl << endl << "Path from weak algorithm: ";
-    for (int i = 0; i < path.size(); i++)
-        cout << path[i]+1 << " ";
-
+    //cout << endl << endl << "Path from weak algorithm: ";
+    /*for (int i = 0; i < path.size(); i++)
+        cout << path[i]+1 << " ";*/
+    was_visited.clear(); //zerowanie pamieci
+    one_not_chosen = 0;
     return path;
 }
 
@@ -32,10 +32,10 @@ void Find_next(std::vector<int>& path, std::vector<std::vector<int>> graph, int 
 {
     
     path.push_back(vertex);
-    cout << endl << "We push " << vertex+1 << " to path";
+    //cout << endl << "We push " << vertex+1 << " to path";
     was_visited[vertex] = true;
     if (path.size() >= graph.size()-positive_errors) {
-        cout << endl << "end :3 ";
+        //cout << endl << "end :3 ";
         return; }
         
     vector<int> possible_next_vertex;
@@ -70,12 +70,13 @@ void Find_next(std::vector<int>& path, std::vector<std::vector<int>> graph, int 
         possible_next_vertex.clear();
         
     }
-    cout << endl << "algorithm can't see next vertex"; //gdy nastêpuje zagnie¿d¿enie - algorytm nie widzi ¿adnej œcie¿ki
+    //cout << endl << "algorithm can't see next vertex"; //gdy nastêpuje zagnie¿d¿enie - algorytm nie widzi ¿adnej œcie¿ki
     return;
 }
 
 void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex)
 {
+    //cout << "suboptimum";
     one_not_chosen = 0;
     vector<int> choose;
     int V = 0;
@@ -88,7 +89,7 @@ void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph
             
     int tmp = rand() % V; //losowanie jeszcze nieodwiedzonego wierzcholka
     int i = choose[tmp];
-    cout << "   " << i + 1 << " was chosen    ";
+    //cout << "   " << i + 1 << " was chosen    ";
     was_visited[vertex] = false; //zeby algorytm dijkstry dzialal
     vector<int> sub_path = Dijkstras_algorithm(path, graph, vertex, i);
     was_visited[vertex] = true;
@@ -104,7 +105,7 @@ void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph
 
 std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex, int wanted) //wersja szukajaca najkrotszej drogi do jednego wierzcholka, nie wszystkich
 {
-    cout << endl << "Dijkstras_algorithm is working" << endl;
+    //cout << endl << "Dijkstras_algorithm is working" << endl;
     vector<bool> S; //czy wierzcholek w zbiorze sprawdzonych?
     int vertex_in_S = 0;
     vector<bool> Q; //czy wierzcholek w zbiorze niesprawdzinych?
@@ -125,7 +126,6 @@ std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::ve
     d[vertex] = 0;
     while (vertex_in_Q != 0)
     {
-       // cout << "test";
         int u = 0; //wierzcholek o najkrotszej sciezce z Q
         while (u != Q.size() && Q[u] == false)
             u++;
@@ -134,7 +134,6 @@ std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::ve
                 u = i;
         if (u >= Q.size())
             break;
-        //cout << endl << "we found u = " << u + 1;
         Q[u] = false; //przenosimy do S
         S[u] = true;
         vertex_in_Q--;
@@ -147,24 +146,20 @@ std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::ve
         for (int i = 0; i < iteracje; i++)
         {
             int w = queue[queue.size() - 1];
-            //cout << endl << "we found w = " << w + 1;
             queue.pop_back();
             if (Q[w] == false)
                 continue;
             int weight = graph[u][w];
             if (weight == 0)
                 weight = 4; //jesli krawedz nie istnieje ustaw duza xD
-            //cout << endl << "if " << d[w] << " > " << d[u] << " + " << weight;
             if (d[w] > d[u] + weight)
             {
-                //cout << endl << "yuhu";
                 d[w] = d[u] + weight;
                 p[w] = u;
             }
         }
     }
     
-   // cout << "sukces";
     vector<int> result_reverse;
     int x = wanted;
     result_reverse.push_back(wanted);
@@ -173,14 +168,10 @@ std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::ve
         x = p[x];
         result_reverse.push_back(x);
     }
-    //cout << "sekces";
     vector<int> result;
     for (int i = result_reverse.size() - 1; i >= 0; i--)
         result.push_back(result_reverse[i]);
-    cout << "suboptimum path: ";
-    for (int i = 0; i < result.size(); i++)
-        cout << result[i]+1 << " ";
-
+    //cout << "dijksta end";
     return result;
 }
 

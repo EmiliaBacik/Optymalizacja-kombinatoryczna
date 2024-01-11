@@ -1,5 +1,6 @@
 ﻿#include "Modul1.hpp"
 #include "Modul2.hpp"
+#include "Modul3.hpp"
 #include <iostream>
 #include <vector>
 #include <set>
@@ -9,20 +10,22 @@
 #include <fstream> // dodana biblioteka do zapisu
 using namespace std;
 
-int negative_errors = 5; //uwaga - tylko na poczatku, ulegnie zmianie przy generowaniu spektrum!
-int positive_errors = 3;
-int n = 25;
-int k = 4;
+int negative_errors = 10; //uwaga - tylko na poczatku, ulegnie zmianie przy generowaniu spektrum!
+int positive_errors = 20;
+int n = 50;
+int k = 8;
 std::vector<char> first_oligonucleotide;
 int first_oligonukleotide_id=0;
 
+void Check_result(vector<int> path, vector<vector<char>> spectrum, vector<vector<int>> graph);
 
 int main()
 {
-    Sequence_generator();  // generuje sekwencje
-    Spectrum_generator(); // wczytuje sekwencje z pliku i na jej podstawie robi spektrum
-    vector<vector<char>> spectrum = loadSpectrumFromFile("spektrum.txt");
+    srand(time(NULL));
+    //Sequence_generator();  // generuje sekwencje
+    //Spectrum_generator(); // wczytuje sekwencje z pliku i na jej podstawie robi spektrum
     vector<char> sequence = loadSequenceFromFile("sekwencja.txt");
+    vector<vector<char>> spectrum = loadSpectrumFromFile("spektrum.txt");
     for (int i = 0; i < n; i++) // wyswietlanie sekwencji
         cout << sequence[i];
     cout << endl;
@@ -42,6 +45,32 @@ int main()
     vector<vector<int>> graph = Graph_maker(spectrum); //macierz sasiedztwa: 0-brak krawedzi, 1,2,3-waga krawedzi
 
     vector<int> path1 = Weak_algorithm(graph);
-    //vector<int> path2 = Heuristic_algorithm(graph);
+    cout << endl;
+    for (int i = 0; i < path1.size(); i++)
+        cout << path1[i] + 1 << " ";
+    Check_result(path1, spectrum, graph);
+    vector<int> path2 = Heuristic_algorithm(graph);
+    cout << endl;
+    for (int i = 0; i < path2.size(); i++)
+        cout << path2[i] + 1 << " ";
+    Check_result(path2, spectrum, graph);
     return 0;
+}
+
+void Check_result(vector<int> path, vector<vector<char>> spectrum,vector<vector<int>> graph)
+{
+    cout << endl << " Result: ";
+    for (int i = 0; i < k; i++)
+        cout << first_oligonucleotide[i];
+    for (int i = 1; i < path.size(); i++)
+        if (graph[path[i - 1]][path[i]] == 1)
+            cout << spectrum[path[i]][k - 1];
+        else if (graph[path[i - 1]][path[i]] == 2)
+            cout << spectrum[path[i]][k - 2] << spectrum[path[i]][k - 1];
+        else if (graph[path[i - 1]][path[i]] == 3)
+            cout << spectrum[path[i]][k - 3] << spectrum[path[i]][k - 2] << spectrum[path[i]][k - 1];
+        else
+            for (int j = 0; j < k; j++)
+                cout << spectrum[path[i]][j];
+
 }

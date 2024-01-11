@@ -9,6 +9,9 @@
 
 using namespace std;
 
+extern std::vector<char> first_oligonucleotide;
+extern int first_oligonukleotide_id;
+
 vector<vector<int>> Graph_maker(vector<vector<char>> spectrum)
 {
     vector<vector<int>> graph(spectrum.size()); //reprezentacja - macierz sasiedztwa
@@ -23,12 +26,12 @@ vector<vector<int>> Graph_maker(vector<vector<char>> spectrum)
             int weight = Imposition(spectrum[i], spectrum[j]);
             graph[i][j] = weight;
         }
-    for (int i = 0; i < spectrum.size(); i++) //wyswietla macierz
+    /*for (int i = 0; i < spectrum.size(); i++) //wyswietla macierz
     {
         for (int j = 0; j < spectrum.size(); j++)
             cout << graph[i][j];
         cout << endl;
-    }
+    }*/
     return graph;
 }
 int Imposition(vector<char> A, vector<char> B)
@@ -77,6 +80,9 @@ std::vector<std::vector<char>> loadSpectrumFromFile(const std::string& fileName)
             std::vector<char> row(line.begin(), line.end());
             spectrum.push_back(row);
         }
+        for (int i = 0; i < spectrum.size(); i++) { //znajdywanie pierwszego oligonukleotydu
+            if (spectrum[i] == first_oligonucleotide)
+                first_oligonukleotide_id = i; }
         inFile.close();
         std::cout << "Spektrum zostalo wczytane z pliku " << fileName << std::endl;
     }

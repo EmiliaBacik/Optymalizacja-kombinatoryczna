@@ -169,12 +169,12 @@ void Sequence_generator()
             break;
         }
     }
-    for (int i = 0; i < n; i++) // wyswietlanie sekwencji
-        cout << sequence[i];
-    cout << endl;
+    //for (int i = 0; i < n; i++) // wyswietlanie sekwencji
+      //  cout << sequence[i];
+    //cout << endl;
     saveSequenceToFile(sequence, "sekwencja.txt"); // zapis sekwencji do pliku
-    for (int i = 0; i < k; i++) //zapis pierwszego oligonukleotydu
-        first_oligonucleotide.push_back(sequence[i]);
+    //for (int i = 0; i < k; i++) //zapis pierwszego oligonukleotydu
+      //  first_oligonucleotide.push_back(sequence[i]);
     return;
 }
 void Spectrum_generator()
@@ -255,15 +255,8 @@ void Spectrum_generator()
         }
     }
     Quick_sort(spectrum, 0, spectrum.size() - 1); //sortowanie alfabetyczne spektrum (utrata informacji o kolejnosci oligonukleotydow)
-    cout << endl;
-    for (int i = 0; i < spectrum.size(); i++) //wyswietlenie gotowego spektrum
-    {
-        for (int j = 0; j < spectrum[i].size(); j++)
-            cout << spectrum[i][j];
-        cout << endl;
-    }
 
-    for (int i = 0; i < spectrum.size(); i++) //wyswietlenie gotowego spektrum
+    for (int i = 0; i < spectrum.size(); i++) //znajdywanie pierwszego oligonukleotydu
     {
         if (spectrum[i] == first_oligonucleotide)
             first_oligonukleotide_id = i;
@@ -281,6 +274,8 @@ std::vector<char> loadSequenceFromFile(const std::string& fileName)  // wczytywa
         while (inFile >> nucleotide) {
             sequence.push_back(nucleotide);
         }
+        for (int i = 0; i < k; i++) //zapis pierwszego oligonukleotydu
+            first_oligonucleotide.push_back(sequence[i]);
         inFile.close();
         std::cout << "Sekwencja zostala wczytana z pliku " << fileName << std::endl;
     }
