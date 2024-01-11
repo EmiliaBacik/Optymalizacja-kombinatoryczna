@@ -1,5 +1,6 @@
 # Optymalizacja-kombinatoryczna
 
-Moduł 2:
-przede wszystkim zrobić funkcję pomocniczą na wypadek zakleszczenia.
-Pytanie: maksymalizujemy ilość wykorzystanych wierzchołków w grafie czy chcemy długość sekwencji bliską oryginalnej (i dlaczego nie to drugie?)?
+Projekt zaliczeniowy z przedmiotu Optymalizacja Kombinatoryczna na Politechnice Poznańskiej.
+
+Aktualny status:
+Moduł 1 i Moduł 2 ukończone. Pierwsze kody testów przygotowane. Moduł 3 niezaczęty.
