@@ -15,7 +15,7 @@ int s_one_not_chosen = 0;
 int repetition_chosen = 0;
 vector<bool> s_was_visited;
 vector<vector<int>> paths;
-int parametr_number_of_ants = 20; //DO ZMIAN PRZY TESTACH!!! LICZBA MRÓWEK
+int parametr_number_of_ants = 50; //DO ZMIAN PRZY TESTACH!!! LICZBA MRÓWEK
 int parametr_of_nonconformity = 80; //od 1 =1% czy cos w tym stylu do 100 =100%/ prawdopodobienstwo ze mrowka wybierze nowa sciezke (zamiast podazac za feromonami) //bedzie sie zmienial z czasem dzialania programu!!
 int parametr_of_time = 25;
 
@@ -65,7 +65,7 @@ vector<int> Heuristic_algorithm(vector<vector<int>> graph)
 		everypath.clear();
 		Pheromone_pairing;
 		Smoothing_values;
-		parametr_of_nonconformity = parametr_of_nonconformity - 0, 1 * parametr_of_nonconformity;
+		parametr_of_nonconformity = parametr_of_nonconformity - 5;
 		x = clock();
 	}
 	return paths[0];
@@ -103,7 +103,7 @@ vector<vector<int>> Rate_solution(vector<vector<int>> paths, vector<vector<int>>
 			else if (graph[paths[i][j]][paths[i][j + 1]] == 3) {
 				counter = counter + 2;
 				tmp=tmp-2; }
-			else if (graph[paths[i][j]][paths[i][j + 1]] == 0) {
+			else {
 				counter = counter + 3;
 				tmp = tmp - 10; }
 		}
@@ -121,22 +121,22 @@ vector<vector<int>> Rate_solution(vector<vector<int>> paths, vector<vector<int>>
 			tmp = tmp - 2 * difference;*/
 		int difference2 = counter - negative_errors; // czy dobra iloœæ b³êdów negatywnych
 		if (difference2 == 0)
-			tmp = tmp + 0, 5 * tmp;
-		else if (difference2 < 5)
-			tmp = tmp + 0, 1 * tmp;
-		else if (difference2 > 5)
-			tmp = tmp - 0, 3 * tmp;
+			tmp = tmp + 1.5 * tmp;
+		else if (difference2 <= 10)
+			tmp = tmp + 0.2 * tmp;
+		else
+			tmp = tmp - 0.3 * tmp;
 		int difference3 = graph.size() - paths[i].size(); //liczba nieodwiedzonych wierzcholkow czy rowna bledom pozytywnym
 		if (difference3 > positive_errors)
 			difference3 = difference3 - positive_errors;
 		else
 			difference3 = positive_errors - difference3;
 		if (difference3 == 0)
-			tmp = tmp + 0, 5 * tmp;
-		else if (difference3 < 5)
-			tmp = tmp + 0,1 * tmp;
-		else if (difference3 > 5)
-			tmp = tmp - 0,3 * tmp;
+			tmp = tmp + 1.5 * tmp;
+		else if (difference3 <= 10)
+			tmp = tmp + 0.2 * tmp;
+		else
+			tmp = tmp - 0.3 * tmp;
 		quotation.push_back(tmp);
 	}
 
