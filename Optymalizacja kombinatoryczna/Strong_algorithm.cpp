@@ -15,9 +15,9 @@ int s_one_not_chosen = 0;
 int repetition_chosen = 0;
 vector<bool> s_was_visited;
 vector<vector<int>> paths;
-int parametr_number_of_ants = 50; //DO ZMIAN PRZY TESTACH!!! LICZBA MRÓWEK
+int parametr_number_of_ants = 150; //DO ZMIAN PRZY TESTACH!!! LICZBA MRÓWEK
 int parametr_of_nonconformity = 80; //od 1 =1% czy cos w tym stylu do 100 =100%/ prawdopodobienstwo ze mrowka wybierze nowa sciezke (zamiast podazac za feromonami) //bedzie sie zmienial z czasem dzialania programu!!
-int parametr_of_time = 25;
+int parametr_of_time = 20;
 
 vector<int> Heuristic_algorithm(vector<vector<int>> graph)
 {
@@ -30,12 +30,6 @@ vector<int> Heuristic_algorithm(vector<vector<int>> graph)
 		first_paths.push_back(tmp);
 	}
 	vector<vector<int>> solution = Rate_solution(first_paths, graph);
-	/*for (int i = 0; i < solution.size(); i++)
-	{
-		cout << endl << "path" << i + 1 << ": ";
-		for (int j = 0; j < solution[i].size(); j++)
-			cout << solution[i][j]+1 << " ";
-	}*/
 	solution.clear();
 	first_paths.clear();
 	clock_t t = clock();
@@ -51,10 +45,6 @@ vector<int> Heuristic_algorithm(vector<vector<int>> graph)
 			vector<int> path;	
 			Strong_find_next(path, graph, first_oligonukleotide_id);
 			everypath.push_back(path);
-			/*cout << "onesukces";
-			cout << endl << endl << "Path from weak algorithm: ";
-			for (int j = 0; j < paths.size(); j++)
-				cout << path[j] + 1 << " ";*/
 			s_was_visited.clear(); //zerowanie pamieci
 			s_one_not_chosen = 0;
 			repetition_chosen = 0;
@@ -84,14 +74,12 @@ void Make_pheromone_matrix(vector<vector<int>> graph) //wype³nia zerami macierz 
 
 vector<vector<int>> Rate_solution(vector<vector<int>> paths, vector<vector<int>> graph)
 {
-	//cout << "Rate solution";
 	vector<int> quotation;
 	vector<vector<int>> solution;
 	for (int i = 0; i < paths.size(); i++)
 	{
 		int tmp = 0;
-		tmp = tmp + paths[i].size(); //dostaje tyle punktów jak¹ ma d³ugoœæ
-		tmp = tmp - 0.45 * tmp;
+		tmp = tmp + 2 * paths[i].size(); //dostaje tyle punktów jak¹ ma d³ugoœæ
 		int counter=0; //licznik krawedzi nierownych 1
 		for (int j = 0; j < paths[i].size() - 1; j++) //dostaje punkty za krawedzi 1 traci gdy krawedz!=1
 		{
@@ -107,18 +95,6 @@ vector<vector<int>> Rate_solution(vector<vector<int>> paths, vector<vector<int>>
 				counter = counter + 3;
 				tmp = tmp - 10; }
 		}
-		/*set<int> test;
-		for (int j = 0; j < paths[i].size(); j++)
-		{
-			test.insert(paths[i][j]);
-		}
-		int difference = paths[i].size() - test.size();
-		if (difference < 5)
-			tmp = tmp - 0, 5 * difference;
-		else if (difference < 15)
-			tmp = tmp - difference;
-		else
-			tmp = tmp - 2 * difference;*/
 		int difference2 = counter - negative_errors; // czy dobra iloœæ b³êdów negatywnych
 		if (difference2 == 0)
 			tmp = tmp + 1.5 * tmp;
@@ -158,24 +134,14 @@ vector<vector<int>> Rate_solution(vector<vector<int>> paths, vector<vector<int>>
 		}
 		add_value = add_value - 0.1;
 	}
-	/*cout << endl;
-	for (int i = 0; i < pheromone_matrix.size(); i++)
-	{
-		for (int j = 0; j < pheromone_matrix[i].size(); j++)
-			cout << pheromone_matrix[i][j] << " ";
-		cout << endl;
-	}*/
-	//cout << " < end of solution";
 	return solution;
 }
 
 void Strong_find_next(vector<int>& path, vector<vector<int>> graph, int vertex)
 {
 	path.push_back(vertex);
-	//cout << endl << "We push " << vertex + 1 << " to path";
 	s_was_visited[vertex] = true;
 	if (path.size() >= graph.size() - positive_errors) {
-		//cout << endl << "end :3 ";
 		return;
 	}
 
@@ -263,14 +229,12 @@ void Strong_find_next(vector<int>& path, vector<vector<int>> graph, int vertex)
 		possible_next_vertex.clear();
 
 	}
-	//cout << endl << "algorithm can't see next vertex"; //gdy nastêpuje zagnie¿d¿enie - algorytm nie widzi ¿adnej œcie¿ki
 	return;
 	}
 }
 
 void Strong_suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex)
 {
-	//cout << "suboptimumpath";
 	s_one_not_chosen = 0;
 	vector<int> choose;
 	int V = 0;
@@ -283,7 +247,6 @@ void Strong_suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>
 
 	int tmp = rand() % V; //losowanie jeszcze nieodwiedzonego wierzcholka
 	int i = choose[tmp];
-	//cout << "   " << i + 1 << " was chosen    ";
 	s_was_visited[vertex] = false; //zeby algorytm dijkstry dzialal
 	vector<int> sub_path = Strong_dijkstras_algorithm(path, graph, vertex, i);
 	s_was_visited[vertex] = true;
@@ -316,12 +279,11 @@ int Find_number_of_probability(int number)
 			else
 				return 0;
 	}
-	return 0; //error ciut
+	return 0; //jeœli error
 }
 
 std::vector<int> Strong_dijkstras_algorithm(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex, int wanted) //wersja szukajaca najkrotszej drogi do jednego wierzcholka, nie wszystkich
 {
-	//cout << endl << "Dijkstras_algorithm is working" << endl;
 	vector<bool> S; //czy wierzcholek w zbiorze sprawdzonych?
 	int vertex_in_S = 0;
 	vector<bool> Q; //czy wierzcholek w zbiorze niesprawdzinych?

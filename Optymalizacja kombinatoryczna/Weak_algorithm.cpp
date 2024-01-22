@@ -20,9 +20,6 @@ vector<int> Weak_algorithm(vector<vector<int>> graph)
         was_visited.push_back(false);
     vector<int> path;
     Find_next(path, graph, first_oligonukleotide_id);
-    //cout << endl << endl << "Path from weak algorithm: ";
-    /*for (int i = 0; i < path.size(); i++)
-        cout << path[i]+1 << " ";*/
     was_visited.clear(); //zerowanie pamieci
     one_not_chosen = 0;
     return path;
@@ -32,10 +29,8 @@ void Find_next(std::vector<int>& path, std::vector<std::vector<int>> graph, int 
 {
     
     path.push_back(vertex);
-    //cout << endl << "We push " << vertex+1 << " to path";
     was_visited[vertex] = true;
     if (path.size() >= graph.size()-positive_errors) {
-        //cout << endl << "end :3 ";
         return; }
         
     vector<int> possible_next_vertex;
@@ -69,14 +64,12 @@ void Find_next(std::vector<int>& path, std::vector<std::vector<int>> graph, int 
          
         possible_next_vertex.clear();
         
-    }
-    //cout << endl << "algorithm can't see next vertex"; //gdy nastêpuje zagnie¿d¿enie - algorytm nie widzi ¿adnej œcie¿ki
-    return;
+    } 
+    return; //gdy nastêpuje zagnie¿d¿enie - algorytm nie widzi ¿adnej œcie¿ki
 }
 
 void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex)
 {
-    //cout << "suboptimum";
     one_not_chosen = 0;
     vector<int> choose;
     int V = 0;
@@ -89,7 +82,6 @@ void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph
             
     int tmp = rand() % V; //losowanie jeszcze nieodwiedzonego wierzcholka
     int i = choose[tmp];
-    //cout << "   " << i + 1 << " was chosen    ";
     was_visited[vertex] = false; //zeby algorytm dijkstry dzialal
     vector<int> sub_path = Dijkstras_algorithm(path, graph, vertex, i);
     was_visited[vertex] = true;
@@ -105,7 +97,6 @@ void Suboptimum_path(std::vector<int>& path, std::vector<std::vector<int>> graph
 
 std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::vector<int>> graph, int vertex, int wanted) //wersja szukajaca najkrotszej drogi do jednego wierzcholka, nie wszystkich
 {
-    //cout << endl << "Dijkstras_algorithm is working" << endl;
     vector<bool> S; //czy wierzcholek w zbiorze sprawdzonych?
     int vertex_in_S = 0;
     vector<bool> Q; //czy wierzcholek w zbiorze niesprawdzinych?
@@ -171,7 +162,6 @@ std::vector<int> Dijkstras_algorithm(std::vector<int>& path, std::vector<std::ve
     vector<int> result;
     for (int i = result_reverse.size() - 1; i >= 0; i--)
         result.push_back(result_reverse[i]);
-    //cout << "dijksta end";
     return result;
 }
 
