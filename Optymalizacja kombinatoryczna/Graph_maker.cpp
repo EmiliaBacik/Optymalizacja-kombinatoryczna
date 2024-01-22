@@ -26,12 +26,6 @@ vector<vector<int>> Graph_maker(vector<vector<char>> spectrum)
             int weight = Imposition(spectrum[i], spectrum[j]);
             graph[i][j] = weight;
         }
-    /*for (int i = 0; i < spectrum.size(); i++) //wyswietla macierz
-    {
-        for (int j = 0; j < spectrum.size(); j++)
-            cout << graph[i][j];
-        cout << endl;
-    }*/
     return graph;
 }
 int Imposition(vector<char> A, vector<char> B)

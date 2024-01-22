@@ -169,12 +169,7 @@ void Sequence_generator()
             break;
         }
     }
-    //for (int i = 0; i < n; i++) // wyswietlanie sekwencji
-      //  cout << sequence[i];
-    //cout << endl;
     saveSequenceToFile(sequence, "sekwencja.txt"); // zapis sekwencji do pliku
-    //for (int i = 0; i < k; i++) //zapis pierwszego oligonukleotydu
-      //  first_oligonucleotide.push_back(sequence[i]);
     return;
 }
 void Spectrum_generator()

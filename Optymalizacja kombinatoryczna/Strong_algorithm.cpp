@@ -17,7 +17,7 @@ vector<bool> s_was_visited;
 vector<vector<int>> paths;
 int parametr_number_of_ants = 150; //DO ZMIAN PRZY TESTACH!!! LICZBA MRÓWEK
 int parametr_of_nonconformity = 80; //od 1 =1% czy cos w tym stylu do 100 =100%/ prawdopodobienstwo ze mrowka wybierze nowa sciezke (zamiast podazac za feromonami) //bedzie sie zmienial z czasem dzialania programu!!
-int parametr_of_time = 20;
+int parametr_of_time = 30;
 
 vector<int> Heuristic_algorithm(vector<vector<int>> graph)
 {
